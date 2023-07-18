@@ -1787,7 +1787,7 @@ ParticleSystem:
   moveWithTransform: 0
   moveWithCustomTransform: {fileID: 0}
   scalingMode: 2
-  randomSeed: 1499988677
+  randomSeed: -180200946
   InitialModule:
     serializedVersion: 3
     enabled: 1
@@ -5538,7 +5538,7 @@ GameObject:
   m_Component:
   - component: {fileID: 272614660}
   m_Layer: 0
-  m_Name: Scene
+  m_Name: Env
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -6733,7 +6733,7 @@ Prefab:
     - target: {fileID: 114641619187921468, guid: 6e5af039e5fbf407ca77e63937143bbd,
         type: 2}
       propertyPath: rotationSmoothTime
-      value: 1
+      value: 0.1
       objectReference: {fileID: 0}
     - target: {fileID: 136122404053384650, guid: 6e5af039e5fbf407ca77e63937143bbd,
         type: 2}
@@ -16097,7 +16097,7 @@ ParticleSystem:
   moveWithTransform: 0
   moveWithCustomTransform: {fileID: 0}
   scalingMode: 2
-  randomSeed: -1400213530
+  randomSeed: 2032530852
   InitialModule:
     serializedVersion: 3
     enabled: 1
