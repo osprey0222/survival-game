@@ -1,16 +1,20 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
-public class UIMain : MonoBehaviour {
+public class UIMain : UIBase
+{
+	public Button m_PlayBtn;
+	public void Start()
+    {
+		m_PlayBtn.onClick.AddListener(OnClickPlay);
+    }
 
-	// Use this for initialization
-	void Start () {
-		
-	}
-	
-	// Update is called once per frame
-	void Update () {
-		
-	}
+    private void OnClickPlay()
+    {
+        SceneManager.LoadScene("Play");
+    }
 }

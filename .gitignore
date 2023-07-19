@@ -6,3 +6,5 @@
 /project/unity-survival/Library
 /project/unity-survival/Assets/*.meta
 /project/unity-survival/Temp
+/project/unity-survival/obj/Debug
+/project/unity-survival/.vs/unity-survival/v16
