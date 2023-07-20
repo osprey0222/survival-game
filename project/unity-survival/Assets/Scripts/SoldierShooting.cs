@@ -8,7 +8,6 @@ public class SoldierShooting : MonoBehaviour
 	public float timeBetweenBullets = 0.2f;
 	public float range = 100f;
 
-
 	float timer;
 	Ray shootRay;
 	RaycastHit shootHit;

@@ -4,30 +4,24 @@ using System.Collections;
 
 public class EnemyMovement : MonoBehaviour
 {
-	Transform player;
-	SoldierHealth playerHealth;
 	EnemyHealth enemyHealth;
 	NavMeshAgent nav;
 
 
 	void Awake ()
 	{
-		player = GameObject.FindGameObjectWithTag ("Player").transform;
-		Debug.Log("player " + player);
-		playerHealth = player.GetComponent <SoldierHealth> ();
 		enemyHealth = GetComponent <EnemyHealth> ();
 		nav = GetComponent <NavMeshAgent> (); 
-		Debug.Log("nav " + nav);
+		//Debug.Log("nav " + nav);
 	}
-
 
 	void Update ()
 	{
-		if(enemyHealth.currentHealth > 0 && playerHealth.currentHealth > 0)
+		if(enemyHealth.currentHealth > 0 && GameData.Singleton.PlayerHealth > 0)
 		{
-		Debug.Log("nav.isOnNavMesh " + nav.isOnNavMesh);
-		Debug.Log("nav.destination " + nav.destination);
-			nav.SetDestination (player.position);
+		//Debug.Log("nav.isOnNavMesh " + nav.isOnNavMesh);
+		//Debug.Log("nav.destination " + nav.destination);
+			nav.SetDestination (GameManager.Singleton.Player.transform.position);
 		}
 		else
 		{

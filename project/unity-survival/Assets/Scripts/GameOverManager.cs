@@ -2,7 +2,6 @@
 
 public class GameOverManager : MonoBehaviour
 {
-	public SoldierHealth playerHealth;
 	public float restartDelay = 10f;
 
 	Animator anim;
@@ -12,7 +11,6 @@ public class GameOverManager : MonoBehaviour
 	{
 		anim = GetComponent<Animator>();
 	}
-
 
 	void Update()
 	{
