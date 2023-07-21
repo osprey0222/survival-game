@@ -40,8 +40,8 @@ public class BaseEntity : MonoBehaviour
     [SerializeField]
     float m_JumpHeight = 3f;
     float m_VelocityY;
-    Vector3 m_LastPos;
-    bool m_IsStationary;
+    protected Vector3 m_LastPos;
+    protected bool m_IsStationary;
     ChState m_CurAniState = ChState.Idle;
     private float m_Health;
 
@@ -80,30 +80,43 @@ public class BaseEntity : MonoBehaviour
 
     protected virtual void Start()
     {
+        m_LastPos = transform.position;
     }
 
     protected virtual void Update()
     {
-        Move();
-        Jump();
-        UpdateAniState();
-        CheckDead();
-    }
-
-    protected void CheckDead()
-    {
-        if (m_Health < 0)
+        Vector3 pos = transform.position;
+        if (!m_IsDead)
         {
-            m_IsDead = true;
+            Move();
+            Jump();
+        }
+
+        if (m_LastPos != pos)
+        {
+            m_LastPos = pos;
+            m_IsStationary = false;
+        }
+        else
+        {
+            m_IsStationary = true;
         }
     }
 
-    protected virtual void FixedUpdate()
+    protected virtual void LateUpdate()
     {
-        float travelSquared = (transform.position - m_LastPos).sqrMagnitude;
-        m_IsStationary = travelSquared < m_StationaryTolerance * m_StationaryTolerance;
-        m_LastPos = transform.position;
+        if (!m_IsDead)
+        {
+            UpdateAniState();
+        }
     }
+
+    //protected virtual void FixedUpdate()
+    //{
+    //    float travelSquared = (transform.position - m_LastPos).sqrMagnitude;
+    //    m_IsStationary = travelSquared < m_StationaryTolerance * m_StationaryTolerance;
+    //    m_LastPos = transform.position;
+    //}
 
     protected virtual void Move()
     {
@@ -161,39 +174,57 @@ public class BaseEntity : MonoBehaviour
     {
         if (m_CurAniState != state)
         {
-            if (m_IsDeadAni) return;
+            if (m_IsDamaged)
+            {
+                return;
+            }
+
             m_CurAniState = state;
+            Debug.Log(m_CurAniState.ToString());
             m_ChaAnimator.Play(m_CurAniState.ToString());
         }
     }
-    protected bool m_IsDeadAni;
-    private IEnumerator SetDeadState()
+    protected bool m_IsDamaged;
+    private IEnumerator Stop()
     {
         float animationTime = 1f;
         ChangeState(ChState.Damage);
         while (animationTime > 0f)
         {
-            m_IsDeadAni = true;
+            if (m_IsDead)
+            {
+                m_IsDamaged = false;
+                yield break;
+            }
+            m_IsDamaged = true;
             animationTime -= Time.deltaTime;
+
             yield return null;
         }
-        m_IsDeadAni = false;
+        m_IsDamaged = false;
     }
 
-    public virtual void Damaged()
+    public virtual void Damaged(float damage)
     {
+        Health -= GameData.Singleton.EnemyDamage;
+
+        if (m_Health < 0f)
+        {
+            m_IsDead = true;
+            Dead();
+            return;
+        }
         if (m_CurAniState != ChState.Damage)
         {
-            StartCoroutine(SetDeadState());
+            StartCoroutine(Stop());
         }
     }
 
     protected virtual void Dead()
     {
-        ChangeState(ChState.Dead);
+        m_ChaAnimator.Play(ChState.Dead.ToString());
         StartCoroutine(WaitDestroy());
         //damaged audio play
-        //damaged animation
     }
 
     private IEnumerator WaitDestroy()

@@ -17,7 +17,7 @@ public class GameData : MonoBehaviour
     private float m_Time;
     [SerializeField]
     private float m_PlayerHealth;
-    private int m_AttackDamage = 10;
+    private int m_AttackDamage = 1;
 
     public float PlayerHealth
     {

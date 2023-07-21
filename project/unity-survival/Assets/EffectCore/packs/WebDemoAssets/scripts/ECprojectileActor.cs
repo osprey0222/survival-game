@@ -103,8 +103,8 @@ public class ECprojectileActor : MonoBehaviour
             EnemyEntity enemy= hit.collider.GetComponent<EnemyEntity>();
             if (enemy != null)
             {
-                enemy.Damaged();
-                Debug.Log("pos");
+                enemy.Damaged(GameData.Singleton.EnemyDamage);
+                //Debug.Log("pos");
                 //enemyHealth.TakeDamage(damagePerShot, shootHit.point);
             }
         }
